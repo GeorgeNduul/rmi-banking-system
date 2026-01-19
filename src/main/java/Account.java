@@ -26,4 +26,8 @@ public interface Account extends Remote {
   // Move some money from one account into this one
   public void transfer(float amt, Account src)
     throws RemoteException, InsufficientFundsException;
+    // get interest
+  public float calculateInterest() throws RemoteException;
+  
+
 }

@@ -86,4 +86,8 @@ public class AccountImpl implements Account {
     }
     return approved;
   }
+        // calculate interest on account balance thread 
+  public float calculateInterest() throws RemoteException {
+    return accBalance;
+  }
 }
