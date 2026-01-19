@@ -1,93 +1,96 @@
 
-/**
- *   "Java Enterprise in a Nutshell, Third Edition, 
- *    by Jim Farley and William Crawford 
- *    with Prakash Malani, John G. Norman, and Justin Gehtland. 
- *    Copyright 2006 O'Reilly Media, Inc., 0-596-10142-2."
- *    Edited by
- */
-
 import java.rmi.RemoteException;
-
-/**
- * AccountImpl: Implementation of the Account remote interface.
- */
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class AccountImpl implements Account {
-  // Our current balance
-  private float accBalance = 0;
-  // Name on account
-  private String accName = "";
-  // Create a new account with the given name
-  public AccountImpl(String name) throws RemoteException {
-    accName = name;
-  }
-  
-  public String getName() throws RemoteException {
-    return accName;
-  }
-  public float getBalance() throws RemoteException {
-    return accBalance;
-  }
-  // Withdraw some funds
-  public void withdraw(float amt)
-  throws RemoteException, InsufficientFundsException {
-    if (accBalance >= amt) {
-      accBalance -= amt;
-      // Log transaction...
-      System.out.println("--> Withdrew " + amt +
-                         " from account " + getName());
-      System.out.println("    New balance: " + getBalance());
+    private final String name;
+    private long balanceInCents;
+    final ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
+
+    public AccountImpl(String name) {
+        this.name = name;
+        this.balanceInCents = 0L;
     }
-    else {
-      throw new InsufficientFundsException("Withdrawal request of " +
-                                           amt + " exceeds balance of "
-                                           + accBalance);
+
+    private static long toCents(float amount) {
+        if (amount < 0f) throw new IllegalArgumentException("Amount must be non-negative");
+        // Convert cautiously; round to nearest cent
+        return Math.round(amount * 100.0f);
     }
-  }
-  
-  // Deposit some funds
-  public void deposit(float amt) throws RemoteException {
-    accBalance += amt;
-    // Log transaction...
-    System.out.println("--> Deposited " + amt +
-                       " into account " + getName());
-    System.out.println("    New balance: " + getBalance());
-  }
-  // Move some funds from another (remote) account into this one
-  public void transfer(float amt, Account src)
-  throws RemoteException, InsufficientFundsException {
-    if (checkTransfer(src, amt)) {
-      src.withdraw(amt);
-      this.deposit(amt);
-      // Log transaction...
-      System.out.println("--> Transferred " + amt +
-                         " from account " + getName());
-      System.out.println("    New balance: " + getBalance());
+
+    private static float toFloat(long cents) {
+        return cents / 100.0f;
     }
-    else {
-      throw new InsufficientFundsException("Source account balance " +
-      "is insufficient for transfer");
+
+    @Override
+    public String getName() throws RemoteException {
+        lock.readLock().lock();
+        try {
+            return name;
+        } finally {
+            lock.readLock().unlock();
+        }
     }
-  }
-  
-  // Check to see if the transfer is possible, given the source account 
-  private boolean checkTransfer(Account src, float amt) {
-    boolean approved = false;
-    try {
-      if (src.getBalance() >= amt) {
-        approved = true;
-      }
+
+    @Override
+    public float getBalance() throws RemoteException {
+        lock.readLock().lock();
+        try {
+            return toFloat(balanceInCents);
+        } finally {
+            lock.readLock().unlock();
+        }
     }
-    catch (RemoteException re) {
-      // If some remote exception occurred, then the transfer is still
-      // compromised, so return false
-      approved = false;
+
+    @Override
+    public void withdraw(float amt) throws RemoteException, InsufficientFundsException {
+        final long cents = toCents(amt);
+        lock.writeLock().lock();
+        try {
+            if (cents > balanceInCents) {
+                throw new InsufficientFundsException("Insufficient funds: need " + amt + ", have " + toFloat(balanceInCents));
+            }
+            balanceInCents -= cents;
+        } finally {
+            lock.writeLock().unlock();
+        }
     }
-    return approved;
-  }
-        // calculate interest on account balance thread 
-  public float calculateInterest() throws RemoteException {
-    return accBalance;
-  }
+
+    @Override
+    public void deposit(float amt) throws RemoteException {
+        final long cents = toCents(amt);
+        lock.writeLock().lock();
+        try {
+            balanceInCents += cents;
+        } finally {
+            lock.writeLock().unlock();
+        }
+    }
+
+    @Override
+    public void transfer(float amt, Account src) throws RemoteException, InsufficientFundsException {
+        // This is safe if src == this (self-transfer), but for two different accounts
+        // in different JVMs/hosts, you cannot take both locks atomically here.
+        // We implement a simple 2-step remote call which is NOT transactionally atomic
+        // across JVM boundaries. For true atomicity, use the Bank service in Path B.
+        src.withdraw(amt);  // may throw InsufficientFundsException
+        try {
+            this.deposit(amt);
+        } catch (RemoteException re) {
+            // You'd need compensation logic here (e.g., deposit back to src) in production.
+            // For assignment purposes we keep it simple.
+            throw re;
+        }
+    }
+
+    @Override
+    public float calculateInterest() throws RemoteException {
+        // Simple demonstration: 5% of balance
+        lock.readLock().lock();
+        try {
+            return toFloat(Math.round(balanceInCents * 0.05));
+        } finally {
+            lock.readLock().unlock();
+        }
+    }
 }

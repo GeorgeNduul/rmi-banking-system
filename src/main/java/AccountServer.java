@@ -1,4 +1,4 @@
-
+/*
 import java.rmi.RemoteException;
 import java.rmi.registry.Registry;
 import java.rmi.registry.LocateRegistry;
@@ -42,3 +42,4 @@ public class AccountServer {
         }
     }
 }
+*/
