@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # RMI Banking System
 A simple client-server banking application built with **Java RMI** (Remote Method Invocation). A `BankServer` exposes a `Bank` service through which multiple `BankClient` instances can open accounts, deposit, withdraw, transfer funds, and check balances concurrently.
 ## What is RMI?
@@ -148,3 +149,6 @@ a withdrawal or transfer exceeds the available balance.
 ## License
 
 No license specified.
+=======
+# rmiBank
+>>>>>>> b43819a (Initial commit)
