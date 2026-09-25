@@ -106,7 +106,7 @@ java -cp target\classes BankClient 127.0.0.1 transfer Alice Bob 125.75
 java -cp target\classes BankClient 127.0.0.1 balance Alice
 java -cp target\classes BankClient 127.0.0.1 balance Bob
 java -cp target\classes BankClient 127.0.0.1 list
-
+```
 <img width="1392" height="47" alt="image" src="https://github.com/user-attachments/assets/12053cc8-1ff1-419f-bce4-f3dff5f1a498" />
 <img width="1327" height="47" alt="image" src="https://github.com/user-attachments/assets/567b24ac-b11c-49e1-9375-ea4ab18ed9bd" />
 <img width="1467" height="327" alt="image" src="https://github.com/user-attachments/assets/ccffb239-d4d6-421c-ada8-2f28b9c69133" />
@@ -115,7 +115,6 @@ java -cp target\classes BankClient 127.0.0.1 list
 <img width="1287" height="42" alt="image" src="https://github.com/user-attachments/assets/6408e8ce-4f68-4f18-9ba2-348b64e9be71" />
 <img width="1212" height="46" alt="image" src="https://github.com/user-attachments/assets/3dd3199e-4052-41ab-aab9-fa311c90a759" />
 
-```
 
 ### Available commands
 
