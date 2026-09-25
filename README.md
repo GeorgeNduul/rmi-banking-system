@@ -106,8 +106,6 @@ java -cp target\classes BankClient 127.0.0.1 open Bob 500
 ```
 <img width="1327" height="47" alt="image" src="https://github.com/user-attachments/assets/567b24ac-b11c-49e1-9375-ea4ab18ed9bd" />
 
-
-
 # Operate from different clients concurrently
 java -cp target\classes BankClient 127.0.0.1 deposit Alice 250
 ```
