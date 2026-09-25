@@ -1,5 +1,4 @@
 # RMI Banking System
-
 A simple client-server banking application built with **Java RMI** (Remote Method Invocation). A `BankServer` exposes a `Bank` service through which multiple `BankClient` instances can open accounts, deposit, withdraw, transfer funds, and check balances concurrently.
 
 ## Features
@@ -49,7 +48,7 @@ javac -d out src/main/java/*.java
 ### 1. Start the server
 
 ```bash
-java -cp out BankServer
+java -cp target\classes BankServer
 ```
 
 This starts an RMI registry on port `1099` (if one isn't already running) and binds the `Bank` service under the name `BankService`.
@@ -60,15 +59,15 @@ In a separate terminal (or several, to simulate concurrent clients):
 
 ```bash
 # Create/open accounts
-java -cp out BankClient 127.0.0.1 open Alice 1000
-java -cp out BankClient 127.0.0.1 open Bob 500
+java -cp target\classes BankClient 127.0.0.1 open Alice 1000
+java -cp target\classes BankClient 127.0.0.1 open Bob 500
 
 # Operate from different clients concurrently
-java -cp out BankClient 127.0.0.1 deposit Alice 250
-java -cp out BankClient 127.0.0.1 transfer Alice Bob 125.75
-java -cp out BankClient 127.0.0.1 balance Alice
-java -cp out BankClient 127.0.0.1 balance Bob
-java -cp out BankClient 127.0.0.1 list
+java -cp target\classes BankClient 127.0.0.1 deposit Alice 250
+java -cp target\classes BankClient 127.0.0.1 transfer Alice Bob 125.75
+java -cp target\classes BankClient 127.0.0.1 balance Alice
+java -cp target\classes BankClient 127.0.0.1 balance Bob
+java -cp target\classes BankClient 127.0.0.1 list
 ```
 
 ### Available commands
