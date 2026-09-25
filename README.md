@@ -1,6 +1,43 @@
 # RMI Banking System
 A simple client-server banking application built with **Java RMI** (Remote Method Invocation). A `BankServer` exposes a `Bank` service through which multiple `BankClient` instances can open accounts, deposit, withdraw, transfer funds, and check balances concurrently.
+## What is RMI?
 
+Remote Method Invocation (RMI) is a Java technology that allows
+a program running in one JVM to invoke methods on objects running
+in another JVM across a network.
+
+In this project:
+
+- BankServer hosts the Bank service
+- Clients connect through the RMI Registry
+- Clients remotely invoke methods such as:
+    - openAccount()
+    - deposit()
+    - withdraw()
+    - transfer()
+ ## Concurrency Design
+
+The banking service must support multiple client requests simultaneously.
+
+### ConcurrentHashMap
+
+Accounts are stored in a ConcurrentHashMap.
+
+Benefits:
+
+- Thread-safe access
+- Better scalability than synchronized collections
+- Supports concurrent readers and writers
+
+### ReentrantReadWriteLock
+
+Each account uses a ReentrantReadWriteLock.
+
+Benefits:
+
+- Multiple threads can read balances concurrently
+- Writes remain exclusive
+- Improves throughput under heavy read workloads
 ## Features
 
 - **Remote banking operations** — open accounts, deposit, withdraw, transfer, and list accounts over RMI
@@ -50,6 +87,7 @@ javac -d out src/main/java/*.java
 ```bash
 java -cp target\classes BankServer
 ```
+<img width="1091" height="112" alt="image" src="https://github.com/user-attachments/assets/d06dd1da-7abd-42e1-93fe-2c1c21fcf91c" />
 
 This starts an RMI registry on port `1099` (if one isn't already running) and binds the `Bank` service under the name `BankService`.
 
