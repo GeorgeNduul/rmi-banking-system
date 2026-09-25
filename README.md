@@ -98,6 +98,10 @@ In a separate terminal (or several, to simulate concurrent clients):
 ```bash
 # Create/open accounts
 java -cp target\classes BankClient 127.0.0.1 open Alice 1000
+```
+<img width="1392" height="47" alt="image" src="https://github.com/user-attachments/assets/12053cc8-1ff1-419f-bce4-f3dff5f1a498" />
+
+
 java -cp target\classes BankClient 127.0.0.1 open Bob 500
 
 # Operate from different clients concurrently
@@ -106,8 +110,6 @@ java -cp target\classes BankClient 127.0.0.1 transfer Alice Bob 125.75
 java -cp target\classes BankClient 127.0.0.1 balance Alice
 java -cp target\classes BankClient 127.0.0.1 balance Bob
 java -cp target\classes BankClient 127.0.0.1 list
-```
-<img width="1392" height="47" alt="image" src="https://github.com/user-attachments/assets/12053cc8-1ff1-419f-bce4-f3dff5f1a498" />
 <img width="1327" height="47" alt="image" src="https://github.com/user-attachments/assets/567b24ac-b11c-49e1-9375-ea4ab18ed9bd" />
 <img width="1467" height="327" alt="image" src="https://github.com/user-attachments/assets/ccffb239-d4d6-421c-ada8-2f28b9c69133" />
 <img width="1442" height="40" alt="image" src="https://github.com/user-attachments/assets/ea935527-b699-404c-b1ed-03e4b4b5521f" />
