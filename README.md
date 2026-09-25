@@ -98,6 +98,8 @@ In a separate terminal (or several, to simulate concurrent clients):
 ```bash
 # Create/open accounts
 java -cp target\classes BankClient 127.0.0.1 open Alice 1000
+
+
 <img width="1392" height="47" alt="image" src="https://github.com/user-attachments/assets/12053cc8-1ff1-419f-bce4-f3dff5f1a498" />
 
 java -cp target\classes BankClient 127.0.0.1 open Bob 500
