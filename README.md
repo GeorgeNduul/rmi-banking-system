@@ -44,7 +44,7 @@ javac -d out src/main/java/*.java
 ```
 
 ## Running
-
+### cd to project folder
 ### 1. Start the server
 
 ```bash
