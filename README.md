@@ -3,7 +3,7 @@ A simple client-server banking application built with **Java RMI** (Remote Metho
 ## What is RMI?
 
 Remote Method Invocation (RMI) is a Java technology that allows
-a program running in one JVM to invoke methods on objects running
+a program running in one Java Virtual Machine (JVM) to invoke methods on objects running
 in another JVM across a network.
 
 In this project:
@@ -98,14 +98,28 @@ In a separate terminal (or several, to simulate concurrent clients):
 ```bash
 # Create/open accounts
 java -cp target\classes BankClient 127.0.0.1 open Alice 1000
+<img width="1392" height="47" alt="image" src="https://github.com/user-attachments/assets/12053cc8-1ff1-419f-bce4-f3dff5f1a498" />
+
 java -cp target\classes BankClient 127.0.0.1 open Bob 500
+<img width="1327" height="47" alt="image" src="https://github.com/user-attachments/assets/567b24ac-b11c-49e1-9375-ea4ab18ed9bd" />
+
 
 # Operate from different clients concurrently
 java -cp target\classes BankClient 127.0.0.1 deposit Alice 250
+<img width="1467" height="327" alt="image" src="https://github.com/user-attachments/assets/ccffb239-d4d6-421c-ada8-2f28b9c69133" />
+
 java -cp target\classes BankClient 127.0.0.1 transfer Alice Bob 125.75
+<img width="1442" height="40" alt="image" src="https://github.com/user-attachments/assets/ea935527-b699-404c-b1ed-03e4b4b5521f" />
+
 java -cp target\classes BankClient 127.0.0.1 balance Alice
+<img width="1347" height="42" alt="image" src="https://github.com/user-attachments/assets/194bbefe-a3d3-4c43-9c8b-0def8cbd0ab0" />
+
 java -cp target\classes BankClient 127.0.0.1 balance Bob
+<img width="1287" height="42" alt="image" src="https://github.com/user-attachments/assets/6408e8ce-4f68-4f18-9ba2-348b64e9be71" />
+
 java -cp target\classes BankClient 127.0.0.1 list
+<img width="1212" height="46" alt="image" src="https://github.com/user-attachments/assets/3dd3199e-4052-41ab-aab9-fa311c90a759" />
+
 ```
 
 ### Available commands
@@ -124,7 +138,26 @@ java -cp target\classes BankClient 127.0.0.1 list
 - **`Bank.transfer` vs `Account.transfer`** — the bank-level transfer (used by the CLI) is the atomic, deadlock-safe path: it locks both accounts server-side before moving funds. The account-level `transfer` method exists for direct client-to-client use but is *not* transactionally atomic across JVM boundaries, and is noted as such in the code.
 - **Remote hostname** — if clients will connect from other machines, uncomment and set `java.rmi.server.hostname` in `BankServer` to a reachable IP or DNS name.
 - **Interest calculation** — `calculateInterest()` is a simple demonstration (5% of balance) and isn't wired into any scheduled or persistent process.
+## Skills Demonstrated
 
+- Object-Oriented Programming
+- Distributed Systems
+- Client-Server Architecture
+- Network Programming
+- Concurrency
+- Thread Safety
+- Exception Handling
+- Maven Build Management
+- Unit Testing
+- Version Control with Git
+## Exception Handling
+
+The project uses custom exceptions such as:
+
+- InsufficientFundsException
+
+This exception is propagated across RMI boundaries when
+a withdrawal or transfer exceeds the available balance.
 ## License
 
 No license specified.
