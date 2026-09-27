@@ -147,7 +147,7 @@ The project uses custom exceptions such as:
 This exception is propagated across RMI boundaries when
 a withdrawal or transfer exceeds the available balance.
 
-Unit Tests Implemented
+## Unit Tests Implemented
 1. Account Creation Test
 Purpose: Verify that newly created accounts are initialized correctly.
 Method Tested:
@@ -224,10 +224,10 @@ Checks:
 Newly created accounts are stored by the bank.
 The correct number of accounts is returned.
 Account records can be retrieved through the bank service.
+
+<img width="632" height="892" alt="image" src="https://github.com/user-attachments/assets/c5a55e92-349d-4b69-957e-ce0bc8fa04fe" />
+
+
 ## License
 
 No license specified.
-<<<<<<< HEAD
-
-=======
->>>>>>> 796b9a4 (Add JUnit test suite and update README)
