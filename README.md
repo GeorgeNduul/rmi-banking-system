@@ -105,6 +105,7 @@ java -cp target\classes BankClient 127.0.0.1 transfer Alice Bob 125.75
 java -cp target\classes BankClient 127.0.0.1 balance Alice
 java -cp target\classes BankClient 127.0.0.1 balance Bob
 java -cp target\classes BankClient 127.0.0.1 list
+java -cp target\classes BankClient 127.0.0.1 interest Alice
 ```
 <img width="1427" height="361" alt="image" src="https://github.com/user-attachments/assets/a10706dc-ece0-49d9-9deb-3f0af44a9d3e" />
 
@@ -145,7 +146,88 @@ The project uses custom exceptions such as:
 
 This exception is propagated across RMI boundaries when
 a withdrawal or transfer exceeds the available balance.
+
+Unit Tests Implemented
+1. Account Creation Test
+Purpose: Verify that newly created accounts are initialized correctly.
+Method Tested:
+AccountImpl(String name)
+Checks:
+Account name is stored correctly.
+Initial balance is set to £0.00.
+
+2. Deposit Test
+Purpose: Verify that deposits increase the account balance correctly.
+Method Tested:
+deposit()
+Chccks:
+Deposited funds are added to the existing balance.
+Updated balance is accurate.
+
+3. Withdrawal Test
+Purpose: Verify that withdrawals reduce the account balance correctly.
+Method Tested:
+withdraw()
+Checks:
+Funds are deducted correctly.
+Updated balance reflects the withdrawal.
+
+4. Insufficient Funds Test
+Purpose: Verify that overdrafts are prevented.
+Methods Tested:
+withdraw()
+InsufficientFundsException
+Checks:
+An InsufficientFundsException is thrown when withdrawal requests exceed the available balance.
+
+5. Interest Calculation Test
+Purpose: Verify that account interest is calculated correctly.
+Method Tested:
+calculateInterest()
+Checks:
+Interest is calculated at 5% of the account balance.
+Returned value is accurate.
+Example:
+Balance: £1000
+Interest: £50
+
+6. Open Account Test
+Purpose: Verify that the bank service can successfully create accounts.
+Method Tested:
+openAccount()
+Checks:
+Account is created successfully.
+Account holder name is stored correctly.
+Opening balance is applied correctly.
+
+7. Find Account Test
+Purpose: Verify that existing accounts can be retrieved.
+Method Tested:
+findAccount()
+Checks:
+Previously created accounts can be located and returned.
+
+8. Transfer Test
+Purpose: Verify that funds can be transferred between accounts.
+Method Tested:
+transfer()
+Checks:
+Source account balance decreases correctly.
+Destination account balance increases correctly.
+Data remains consistent after the transfer.
+
+9. List Account Test 
+Purpose: Verify that the banking system correctly maintains and returns a list of all registered accounts.
+Method Tested:
+listAccounts()
+Checks:
+Newly created accounts are stored by the bank.
+The correct number of accounts is returned.
+Account records can be retrieved through the bank service.
 ## License
 
 No license specified.
+<<<<<<< HEAD
 
+=======
+>>>>>>> 796b9a4 (Add JUnit test suite and update README)

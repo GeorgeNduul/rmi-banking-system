@@ -69,6 +69,19 @@ public class BankClient {
                 System.out.println("Accounts: " + bank.listAccounts());
                 break;
             }
+            case "interest": {
+                String name = args[2];
+
+                Account acct = bank.findAccount(name);
+
+                if (acct == null) {
+                    System.out.println("No such account: " + name);
+                    break;
+                }
+
+                System.out.println("Interest: " + acct.calculateInterest());
+                break;
+            }
             default:
                 System.out.println("Unknown command.");
         }
