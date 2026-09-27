@@ -106,7 +106,7 @@ java -cp target\classes BankClient 127.0.0.1 balance Alice
 java -cp target\classes BankClient 127.0.0.1 balance Bob
 java -cp target\classes BankClient 127.0.0.1 list
 ```
-<img width="1507" height="312" alt="image" src="https://github.com/user-attachments/assets/2882a530-6301-4e88-8119-0c7b3584e19e" />
+<img width="1427" height="361" alt="image" src="https://github.com/user-attachments/assets/a10706dc-ece0-49d9-9deb-3f0af44a9d3e" />
 
 
 ### Available commands
